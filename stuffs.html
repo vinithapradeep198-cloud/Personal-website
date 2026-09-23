@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#070913">
+<title>The Vault | AASHVIN ♡</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2300f0ff'/%3E%3Cstop offset='1' stop-color='%23ff2d95'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%230b0f1e'/%3E%3Ctext x='32' y='44' font-size='36' font-family='Arial Black' font-weight='900' text-anchor='middle' fill='url(%23g)'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="fx"></canvas>
+<canvas id="matrix"></canvas>
+<div class="grid-overlay"></div>
+<div class="glow glow-c"></div>
+
+<nav>
+  <a href="./index.html" class="logo"><div class="logo-mark">A</div><span><b>AASHVIN</b></span></a>
+  <div class="nav-links">
+    <a href="./index.html">01 // HOME</a>
+    <a href="./tools.html">02 // TOOLS</a>
+    <a href="./stuffs.html" class="active">03 // STUFFS</a>
+    <a href="./comments.html">04 // COMMENTS</a>
+  </div>
+</nav>
+
+<main style="padding-top: 140px;">
+  <div class="page-header reveal">
+    <h1>✨ The Vault</h1>
+    <p>GALLERY • STUFFS • COMING SOON</p>
+  </div>
+  
+  <div class="page-sheet reveal" style="max-width:800px">
+    <div class="sheet-body" style="text-align:center; padding: 100px 20px;">
+      <span style="font-size:48px; opacity:0.8; display:block; margin-bottom:20px;">🔒</span>
+      <h3 style="font-family:var(--mono); letter-spacing:0.1em; color:var(--text); margin-bottom:10px;">VAULT LOCKED</h3>
+      <p style="color:var(--muted); font-size:14px; font-family:var(--mono);">Aashvin is still cooking up this page. Check back soon.</p>
+      
+      <a href="./index.html" class="btn btn-primary" style="margin-top:40px" data-sfx>Back to Home</a>
+    </div>
+  </div>
+  
+  <footer>
+    <div class="foot-bar">
+      <button class="btn-admin" id="adminBtn">
+        <svg class="crest" viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <defs><linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdf3d0"/><stop offset="55%" stop-color="#d4af37"/><stop offset="100%" stop-color="#8a6a1a"/></linearGradient></defs>
+          <path d="M12 2.6 4.4 5.8v6c0 4.6 3.2 8.4 7.6 9.6 4.4-1.2 7.6-5 7.6-9.6v-6z"/><circle cx="12" cy="11" r="2.1"/><path d="M12 13.1v3.1"/>
+        </svg><b>Admin</b>
+      </button>
+    </div>
+  </footer>
+</main>
+
+<div id="toast"><span class="tdot"></span><span id="toastMsg"></span></div>
+
+<!-- ============ ADMIN LOGIN ============ -->
+<div class="modal" id="mAdmin">
+  <div class="modal-sheet">
+    <div class="sheet-head">
+      <h3>Restricted Access</h3>
+      <button class="x-btn" data-close aria-label="close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="sheet-body">
+      <div class="lock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10.5" rx="2.6"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/><circle cx="12" cy="15.4" r="1.5"/><path d="M12 16.9v1.8"/></svg></div>
+      <form id="adminForm" autocomplete="off">
+        <div class="field"><label>Username</label><input type="text" id="admUser" placeholder="enter username"></div>
+        <div class="field"><label>Password</label><input type="password" id="admPass" placeholder="enter password"></div>
+        <button type="submit" class="gold-btn">Authenticate</button>
+        <div class="err" id="admErr"></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js"></script>
+</body>
+</html>
