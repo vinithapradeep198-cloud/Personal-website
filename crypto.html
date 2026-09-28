@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#070913">
+<title>Crypto Tracker | AASHVIN ♡</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2300f0ff'/%3E%3Cstop offset='1' stop-color='%23ff2d95'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%230b0f1e'/%3E%3Ctext x='32' y='44' font-size='36' font-family='Arial Black' font-weight='900' text-anchor='middle' fill='url(%23g)'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+<style>
+.crypto-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:18px 0 26px}
+.crypto-card{border-radius:24px;background:var(--glass);border:1px solid var(--stroke);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:22px}
+.crypto-status{font-family:var(--mono);font-size:12px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.crypto-frame{width:100%;height:min(72vh,820px);border:none;border-radius:20px;background:rgba(0,0,0,.25);border:1px solid var(--stroke);display:none}
+.crypto-frame.show{display:block}
+.crypto-note{color:var(--muted);font-family:var(--mono);font-size:12px;line-height:1.9;letter-spacing:.04em}
+.codebox{margin-top:18px;padding:16px 18px;border-radius:18px;background:rgba(0,0,0,.28);border:1px solid var(--stroke);font-family:var(--mono);font-size:12px;color:var(--text);overflow:auto}
+.codebox b{color:var(--cyan)}
+.warn{color:#ffd06f}
+.ok{color:#00ff9d}
+.hide-admin{display:none}
+body.admin .hide-admin{display:block}
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+<canvas id="matrix"></canvas>
+<div class="grid-overlay"></div>
+<div class="glow glow-a"></div><div class="glow glow-b"></div>
+<div id="cursorGlow"></div>
+<div id="scrollbar"></div>
+
+<nav>
+  <a href="./index.html" class="logo"><div class="logo-mark">A</div><span><b>AASHVIN</b></span></a>
+  <div class="nav-links">
+    <a href="./index.html">01 // HOME</a>
+    <a href="./tools.html">02 // TOOLS</a>
+    <a href="./stuffs.html">03 // STUFFS</a>
+    <a href="./comments.html">04 // COMMENTS</a>
+  </div>
+</nav>
+
+<main style="padding-top:140px;">
+  <div class="page-header reveal in">
+    <h1>₿ Crypto Tracker</h1>
+    <p>admin-only launcher • live app or zip download</p>
+  </div>
+
+  <div class="page-sheet reveal in" style="max-width:1100px;">
+    <div class="sheet-body">
+      <div class="crypto-actions">
+        <a class="btn btn-primary" id="launchLiveBtn" href="#" style="display:none">Open Live Tracker</a>
+        <a class="btn btn-ghost" id="downloadZipBtn" href="./files/crypto-tracker.zip" download style="display:none">Download Tracker ZIP</a>
+        <a class="btn btn-ghost" href="./tools.html">Back to Tools</a>
+      </div>
+
+      <div class="crypto-card" style="margin-bottom:18px;">
+        <div class="crypto-status" id="cryptoStatus">Checking tracker files…</div>
+      </div>
+
+      <iframe id="cryptoFrame" class="crypto-frame" title="Crypto Tracker Preview"></iframe>
+
+      <div class="crypto-card hide-admin" id="cryptoHelp" style="margin-top:18px;display:none;">
+        <div class="crypto-status" style="margin-bottom:10px;">How to add your tracker</div>
+        <div class="crypto-note">
+          If your tracker is a <span class="ok">browser-based HTML/CSS/JS app</span>, unzip it into <b>/crypto/</b> and make sure the main file is <b>/crypto/index.html</b>.<br>
+          If you only want a <span class="warn">downloadable ZIP</span>, place the file at <b>/files/crypto-tracker.zip</b>.<br>
+          You can do this directly in GitHub: <b>Add file → Upload files → Commit</b>.
+        </div>
+        <div class="codebox">
+<b>Live app path</b>
+/crypto/index.html
+
+<b>ZIP path</b>
+/files/crypto-tracker.zip
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="foot-bar">
+      <button class="btn-admin" id="adminBtn">
+        <svg class="crest" viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <defs><linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdf3d0"/><stop offset="55%" stop-color="#d4af37"/><stop offset="100%" stop-color="#8a6a1a"/></linearGradient></defs>
+          <path d="M12 2.6 4.4 5.8v6c0 4.6 3.2 8.4 7.6 9.6 4.4-1.2 7.6-5 7.6-9.6v-6z"/>
+          <circle cx="12" cy="11" r="2.1"/><path d="M12 13.1v3.1"/>
+        </svg><b>Admin</b>
+      </button>
+    </div>
+  </footer>
+</main>
+
+<div id="toast"><span class="tdot"></span><span id="toastMsg"></span></div>
+
+<div class="modal" id="mAdmin">
+  <div class="modal-sheet">
+    <div class="sheet-head">
+      <h3>Restricted Access</h3>
+      <button class="x-btn" data-close aria-label="close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="sheet-body">
+      <div class="lock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10.5" rx="2.6"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/><circle cx="12" cy="15.4" r="1.5"/><path d="M12 16.9v1.8"/></svg></div>
+      <form id="adminForm" autocomplete="off">
+        <div class="field"><label>Username</label><input type="text" id="admUser" placeholder="enter username"></div>
+        <div class="field"><label>Password</label><input type="password" id="admPass" placeholder="enter password"></div>
+        <button type="submit" class="gold-btn">Authenticate</button>
+        <div class="err" id="admErr"></div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js"></script>
+<script>
+(async function(){
+  const status = document.getElementById('cryptoStatus');
+  const frame = document.getElementById('cryptoFrame');
+  const launchBtn = document.getElementById('launchLiveBtn');
+  const zipBtn = document.getElementById('downloadZipBtn');
+  const help = document.getElementById('cryptoHelp');
+
+  async function exists(url){
+    try{ const r = await fetch(url,{method:'HEAD',cache:'no-store'}); return r.ok; }catch(e){ return false; }
+  }
+  function syncHelp(){
+    if(help) help.style.display = document.body.classList.contains('admin') ? 'block' : 'none';
+  }
+
+  const hasLive = await exists('./crypto/index.html');
+  const hasZip = await exists('./files/crypto-tracker.zip');
+
+  if(hasLive){
+    status.textContent = 'Live tracker detected at /crypto/index.html';
+    launchBtn.style.display = 'inline-flex';
+    launchBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      frame.src = './crypto/index.html';
+      frame.classList.add('show');
+      frame.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  }
+
+  if(hasZip){
+    zipBtn.style.display = 'inline-flex';
+    if(!hasLive) status.textContent = 'ZIP tracker detected at /files/crypto-tracker.zip';
+  }
+
+  if(!hasLive && !hasZip){
+    status.textContent = 'No tracker detected yet — add your tracker files to the repo';
+  }
+  syncHelp();
+  setInterval(syncHelp, 600);
+})();
+</script>
+</body>
+</html>
