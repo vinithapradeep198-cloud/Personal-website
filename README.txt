@@ -1,14 +1,6 @@
-Put your crypto tracker ZIP here using this exact name if you want the launcher page to detect it automatically:
+If your crypto tracker is a web app, unzip it here.
 
-crypto-tracker.zip
-
-Example path:
-/files/crypto-tracker.zip
-
-If your ZIP contains a browser-based HTML tool and you want it to open live instead of download-only, unzip its contents into:
-
-/crypto/
-
-and make sure the main entry file is:
-
+Expected main entry:
 /crypto/index.html
+
+Then the admin-only Crypto button will open it from crypto.html.
